@@ -12,6 +12,12 @@ public class Account : MonoBehaviourExtBind
     private float _currentTime = 0;
     private int _currenMoneyIncrease;
 
+    [OnStart]
+    private void InitMiney()
+    {
+        Model.Set(_moneyCount, _money);
+    }
+
     [OnUpdate]
     private void ChangeMoneyCount()
     {
