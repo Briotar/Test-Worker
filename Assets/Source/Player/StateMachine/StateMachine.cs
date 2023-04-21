@@ -38,9 +38,6 @@ public class StateMachine : MonoBehaviourExtBind
     private void UpdateThis()
     {
         Settings.Fsm.Update(Time.deltaTime);
-
-        //if(Settings.Fsm.CurrentStateName == "RunState")
-            //Move();
     }
 
     [Bind("NewTarget")]
