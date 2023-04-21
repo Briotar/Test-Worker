@@ -27,6 +27,7 @@ public class StateMachine : MonoBehaviourExtBind
         Settings.Fsm = new FSM();
         Settings.Fsm.Add(new IdleState());
         Settings.Fsm.Add(new RunState());
+        Settings.Fsm.Add(new StayState());
 
         Settings.Fsm.Start("IdleState");
     }

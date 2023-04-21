@@ -17,7 +17,7 @@ public class RunState : FSMState
     [Bind("Stop")]
     private void NextState()
     {
-        Parent.Change("IdleState");
+        Parent.Change("StayState");
     }
 
     [Exit]

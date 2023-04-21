@@ -1,30 +1,39 @@
 using UnityEngine;
 using AxGrid;
 using AxGrid.Base;
+using AxGrid.Model;
 
-public class Account : MonoBehaviourExt
+public class Account : MonoBehaviourExtBind
 {
-    [SerializeField] private int _moneyIncrease = 10;
-    [SerializeField] private string _fieldName;
+    [SerializeField] private string _moneyCount;
+    [SerializeField] private string _increaseMoneyCount;
 
     private int _money = 0;
     private float _currentTime = 0;
-
-    public int Money => _money;
+    private int _currenMoneyIncrease;
 
     [OnUpdate]
-    private void IncreaseMoney()
+    private void ChangeMoneyCount()
     {
-        if (_currentTime >= 1f)
+        if(Settings.Fsm.CurrentStateName == "StayState")
         {
-            _currentTime = 0;
-            _money += _moneyIncrease;
+            if (_currentTime >= 1f)
+            {
+                _currentTime = 0;
+                _money += _currenMoneyIncrease;
 
-            Model.Set(_fieldName, _money);
+                Model.Set(_moneyCount, _money);
+            }
+            else
+            {
+                _currentTime += Time.deltaTime;
+            }
         }
-        else
-        {
-            _currentTime += Time.deltaTime;
-        }
+    }
+
+    [Bind("On{_increaseMoneyCount}Changed")]
+    public void OnMoneyChanged(int value)
+    {
+        _currenMoneyIncrease = value;
     }
 }

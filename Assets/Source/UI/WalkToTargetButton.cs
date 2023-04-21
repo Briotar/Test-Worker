@@ -1,5 +1,7 @@
 using UnityEngine;
+using AxGrid;
 using AxGrid.Base;
+using AxGrid.Model;
 
 [RequireComponent(typeof(UnityEngine.UI.Button))]
 public class WalkToTargetButton : MonoBehaviourExt
@@ -17,6 +19,7 @@ public class WalkToTargetButton : MonoBehaviourExt
 
     private void OnClick()
     {
-        Debug.Log("Button!" + _target.gameObject.name);
+        Settings.Invoke("NewTarget", _target);
+        _button.interactable = false;
     }
 }
