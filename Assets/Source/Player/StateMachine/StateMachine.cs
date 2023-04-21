@@ -3,12 +3,14 @@ using AxGrid;
 using AxGrid.Base;
 using AxGrid.FSM;
 using AxGrid.Model;
+using AxGrid.Path;
 
 [RequireComponent(typeof(Player))]
 public class StateMachine : MonoBehaviourExtBind
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _speed = 0.0015f;
+    [SerializeField] private float _timeAnim = 10f;
 
     private Player _player;
 
@@ -37,24 +39,29 @@ public class StateMachine : MonoBehaviourExtBind
     {
         Settings.Fsm.Update(Time.deltaTime);
 
-        if(Settings.Fsm.CurrentStateName == "RunState")
-            Move();
+        //if(Settings.Fsm.CurrentStateName == "RunState")
+            //Move();
     }
 
     [Bind("NewTarget")]
     private void SetNewTarget(Transform newTarget)
     {
         _target = newTarget;
+
+        Path = new CPath();
+        Move();
     }
 
     private void Move()
     {
-        _player.transform.position = Vector3.MoveTowards(_player.transform.position, _target.position, _speed);
-
-        float diff = (_player.transform.position - _target.position).magnitude;
-        if (diff <= 0.01f)
+        Path.EasingLinear(_timeAnim, _player.transform.position.x, _target.transform.position.x, value =>
         {
-            Settings.Invoke("Stop");
-        }
+            _player.transform.position = new Vector3(value, _player.transform.position.y, _player.transform.position.z);
+        })
+        .EasingLinear(_timeAnim, _player.transform.position.y, _target.transform.position.y, value =>
+        {
+            _player.transform.position = new Vector3(_player.transform.position.x, value, _player.transform.position.z);
+        })
+        .Action(() => { Settings.Invoke("Stop"); });
     }
 }
