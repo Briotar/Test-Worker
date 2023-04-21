@@ -6,7 +6,7 @@ using AxGrid.Model;
 public class Account : MonoBehaviourExtBind
 {
     [SerializeField] private string _moneyCount;
-    [SerializeField] private string _increaseMoneyCount;
+    [SerializeField] private int _constIncreaseMoney = 10;
 
     private int _money = 0;
     private float _currentTime = 0;
@@ -31,9 +31,21 @@ public class Account : MonoBehaviourExtBind
         }
     }
 
-    [Bind("On{_increaseMoneyCount}Changed")]
-    public void OnMoneyChanged(int value)
+    [Bind("OnHomeButtonClick")]
+    private void HomeClick()
     {
-        _currenMoneyIncrease = value;
+        _currenMoneyIncrease = 0;
+    }
+
+    [Bind("OnWorkButtonClick")]
+    private void WorkClick()
+    {
+        _currenMoneyIncrease = _constIncreaseMoney;
+    }
+
+    [Bind("OnShopButtonClick")]
+    private void ShopClick()
+    {
+        _currenMoneyIncrease = -_constIncreaseMoney;
     }
 }

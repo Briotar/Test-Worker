@@ -4,8 +4,9 @@ using AxGrid.Base;
 using AxGrid.Model;
 
 [RequireComponent(typeof(UnityEngine.UI.Button))]
-public class WalkToTargetButton : MonoBehaviourExt
+public class WalkToTargetButton : MonoBehaviourExtBind
 {
+    [SerializeField] private string _gameObjName;
     [SerializeField] private Transform _target;
 
     private UnityEngine.UI.Button _button;
@@ -14,12 +15,18 @@ public class WalkToTargetButton : MonoBehaviourExt
     public void Init()
     {
         _button = GetComponent<UnityEngine.UI.Button>();
-        _button.onClick.AddListener(this.OnClick);
     }
 
+    [Bind("On{_gameObjName}Click")]
     private void OnClick()
     {
         Settings.Invoke("NewTarget", _target);
         _button.interactable = false;
+    }
+
+    [Bind("SoundPlay")]
+    private void OnButton()
+    {
+        _button.interactable = true;
     }
 }
