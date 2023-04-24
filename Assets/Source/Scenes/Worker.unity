@@ -1324,8 +1324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalModel: 0
   _target: {fileID: 0}
-  _speed: 0.0015
-  _timeAnim: 1
+  _timeAnim: 2
 --- !u!1 &1181168745
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,7 +10,6 @@ public class StayState : FSMState
     private void EnterThis()
     {
         Log.Debug($"{Parent.CurrentStateName} ENTER");
-        Log.Debug("start idle anim");
 
         Camera.main.backgroundColor = Color.black;
     }

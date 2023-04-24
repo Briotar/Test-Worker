@@ -8,10 +8,9 @@ using AxGrid.Path;
 [RequireComponent(typeof(Player))]
 public class StateMachine : MonoBehaviourExtBind
 {
-    [SerializeField] private Transform _target;
-    [SerializeField] private float _speed = 0.0015f;
     [SerializeField] private float _timeAnim = 10f;
 
+    private Transform _target;
     private Player _player;
 
     [OnAwake]
@@ -27,11 +26,11 @@ public class StateMachine : MonoBehaviourExtBind
 
         Log.Debug("Main Start");
         Settings.Fsm = new FSM();
-        Settings.Fsm.Add(new IdleState());
+        Settings.Fsm.Add(new EntryState());
         Settings.Fsm.Add(new RunState());
         Settings.Fsm.Add(new StayState());
 
-        Settings.Fsm.Start("IdleState");
+        Settings.Fsm.Start("EntryState");
     }
 
     [OnUpdate]
@@ -51,13 +50,11 @@ public class StateMachine : MonoBehaviourExtBind
 
     private void Move()
     {
-        Path.EasingLinear(_timeAnim, _player.transform.position.x, _target.transform.position.x, value =>
+        Vector2 startPostion = _player.transform.position;
+
+        Path.EasingLinear(_timeAnim, 0, 1, (f) =>
         {
-            _player.transform.position = new Vector3(value, _player.transform.position.y, _player.transform.position.z);
-        })
-        .EasingLinear(_timeAnim, _player.transform.position.y, _target.transform.position.y, value =>
-        {
-            _player.transform.position = new Vector3(_player.transform.position.x, value, _player.transform.position.z);
+            _player.transform.position = Vector2.Lerp(startPostion, _target.position, f);
         })
         .Action(() => { Settings.Invoke("Stop"); });
     }

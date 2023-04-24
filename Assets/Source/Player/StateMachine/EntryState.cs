@@ -3,14 +3,13 @@ using AxGrid;
 using AxGrid.Model;
 using AxGrid.FSM;
 
-[State("IdleState")]
-public class IdleState : FSMState
+[State("EntryState")]
+public class EntryState : FSMState
 {
     [Enter]
     private void EnterThis()
     {
         Log.Debug($"{Parent.CurrentStateName} ENTER");
-        Log.Debug("start idle anim");
 
         Camera.main.backgroundColor = Color.gray;
     }

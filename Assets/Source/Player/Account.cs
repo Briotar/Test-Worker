@@ -6,7 +6,7 @@ using AxGrid.Model;
 public class Account : MonoBehaviourExtBind
 {
     [SerializeField] private string _moneyCount;
-    [SerializeField] private int _constIncreaseMoney = 10;
+    [SerializeField] private const int _constIncreaseMoney = 10;
 
     private int _money = 0;
     private float _currentTime = 0;
